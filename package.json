@@ -1,0 +1,19 @@
+{
+  "name": "mern-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vacaramin/Ecommerce-store-MERN-Stack.git"
+  },
+  "author": "Waqar Amin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vacaramin/Ecommerce-store-MERN-Stack/issues"
+  },
+  "homepage": "https://github.com/vacaramin/Ecommerce-store-MERN-Stack#readme"
+}
