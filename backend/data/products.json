@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Sandisk Ultra 128GB ",
+        "price": "45.89",
+        "description": "SanDisk Ultra 128GB microSDXC UHS-I card with Adapter - 100MB/s U1 A1 - SDSQUAR-128G-GN6MA",
+        "ratings": "4.7",
+        "images": [{
+            "public_id" : "tzfnrli3szrdnb4jgge",
+            "url" : "https://res.cloudinary/com/shopit/image/upload/v1606231282/products/tzfnrli3szrdnb4jgge.jpg"
+        }],
+        "category": "Electronics",
+        "seller": "Ebay",
+        "stock": 10,
+        "numOfReviews": 0,
+        "reviews": []
+    },
+    {
+        "name": "Apple watch ",
+        "price": "99.89",
+        "description": "Ultra",
+        "ratings": "4.7",
+        "images": [{
+            "public_id" : "tzfnrli3szrdnb4jgge",
+            "url" : "https://res.cloudinary/com/shopit/image/upload/v1606231282/products/tzfnrli3szrdnb4jgge.jpg"
+        }],
+        "category": "Electronics",
+        "seller": "Ebay",
+        "stock": 10,
+        "numOfReviews": 0,
+        "reviews": []
+    }
+
+]
