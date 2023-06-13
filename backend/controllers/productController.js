@@ -1,14 +1,18 @@
 const { default: mongoose } = require('mongoose');
 const products = require('../models/product');
 
-exports.newProduct = async (req, res, next) => {
+const ErrorHandler = require('../utils/errorHandler');
+
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+exports.newProduct = catchAsyncErrors (async (req, res, next) => {
   const product = await products.create(req.body);
   res.status(201).json({
     success: true,
     product
   });
-}
-exports.getProducts = async (req, res) => {
+});
+
+exports.getProducts = catchAsyncErrors (async (req, res) => {
   try {
     const productlist = await products.find();
     res.status(200).json({
@@ -22,16 +26,13 @@ exports.getProducts = async (req, res) => {
       error: 'Server error'
     });
   }
-};
+});
 
-exports.getSingleProduct = async (req, res) => { // api/v1/product/:id
+exports.getSingleProduct = catchAsyncErrors( async (req, res) => { // api/v1/product/:id
   try {
     const product = await products.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({
-        success: false,
-        error: 'Product not found'
-      });
+      return next(new ErrorHandler('Product not found', 404));
     }
     res.status(200).json({
       success: true,
@@ -44,9 +45,9 @@ exports.getSingleProduct = async (req, res) => { // api/v1/product/:id
       error: 'Server error'
     });
   }
-};
+});
 
-exports.updateProduct = async (req, res) => {
+exports.updateProduct = catchAsyncErrors( async (req, res) => {
   let product = await products.findById(req.params.id);
   if (!product) {
     return res.status(404).json({
@@ -66,8 +67,8 @@ exports.updateProduct = async (req, res) => {
   });
 
 
-};
-exports.deleteProduct = async (req, res) => {
+});
+exports.deleteProduct = catchAsyncErrors (async (req, res) => {
   const product = await products.findById(req.params.id);
   if (!product) {
     return res.status(404).json({
@@ -82,4 +83,11 @@ exports.deleteProduct = async (req, res) => {
     success: true,
     message: 'Product is deleted'
   });
-};
+});
+
+//1. Practice application. MERN CODE
+//2. CODE Study
+//3. Shehroze Test
+//4. 
+//-- Standard maintain documentation
+//5. 
