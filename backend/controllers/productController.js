@@ -4,8 +4,14 @@ const products = require('../models/product');
 const ErrorHandler = require('../utils/errorHandler');
 
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const APIfeatures = require('../utils/apiFeatures')
 exports.newProduct = catchAsyncErrors (async (req, res, next) => {
-  const product = await products.create(req.body);
+  
+  const apiFeatures = new APIFeatures(product.find(), req.query)
+            .search()
+  
+  const product = await apiFeatures.query;
+  
   res.status(201).json({
     success: true,
     product
@@ -84,10 +90,3 @@ exports.deleteProduct = catchAsyncErrors (async (req, res) => {
     message: 'Product is deleted'
   });
 });
-
-//1. Practice application. MERN CODE
-//2. CODE Study
-//3. Shehroze Test
-//4. 
-//-- Standard maintain documentation
-//5. 
