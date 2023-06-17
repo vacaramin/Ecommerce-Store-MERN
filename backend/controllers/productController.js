@@ -7,10 +7,8 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIfeatures = require('../utils/apiFeatures')
 exports.newProduct = catchAsyncErrors (async (req, res, next) => {
   
-  const apiFeatures = new APIFeatures(product.find(), req.query)
-            .search()
   
-  const product = await apiFeatures.query;
+  const product = await products.create(req.body) ;
   
   res.status(201).json({
     success: true,
@@ -20,7 +18,10 @@ exports.newProduct = catchAsyncErrors (async (req, res, next) => {
 
 exports.getProducts = catchAsyncErrors (async (req, res) => {
   try {
-    const productlist = await products.find();
+    
+  const apiFeatures = new APIFeatures(product.find(), req.query)
+  .search()
+    const productlist = await apiFeatures.query;
     res.status(200).json({
       success: true,
       count: productlist.length,
