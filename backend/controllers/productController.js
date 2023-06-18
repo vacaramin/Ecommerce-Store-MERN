@@ -4,7 +4,7 @@ const products = require('../models/product');
 const ErrorHandler = require('../utils/errorHandler');
 
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const APIfeatures = require('../utils/apiFeatures')
+const APIFeatures = require('../utils/apiFeatures')
 exports.newProduct = catchAsyncErrors (async (req, res, next) => {
   
   
@@ -17,24 +17,16 @@ exports.newProduct = catchAsyncErrors (async (req, res, next) => {
 });
 
 exports.getProducts = catchAsyncErrors (async (req, res) => {
-  try {
-    
-  const apiFeatures = new APIFeatures(product.find(), req.query)
+  const apiFeatures = new APIFeatures(products.find(), req.query)
   .search()
   .filter()
-  
     const productlist = await apiFeatures.query;
     res.status(200).json({
       success: true,
       count: productlist.length,
       productlist
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Server error'
-    });
-  }
+  
 });
 
 exports.getSingleProduct = catchAsyncErrors( async (req, res) => { // api/v1/product/:id

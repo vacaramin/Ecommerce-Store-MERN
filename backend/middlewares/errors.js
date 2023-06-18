@@ -14,6 +14,7 @@ module.exports = (err, req, res, next) => {
     }else if (process.env.NODE_ENV === 'PRODUCTION') {
         let error = {...err}
         error.message = err.message;
+        tack: err.stack
         // Wrong Mongoose Object ID Error 
         if (err.name === 'CastError') {
             const message = `Resource not found. Invalid: ${err.path}`
