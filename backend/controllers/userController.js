@@ -17,9 +17,10 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
             url: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png'
         }
     })
+    const token = user.getJwtToken();
     res.status(201).json({
         success: true,
-        user
+        token
     })
 
 })
