@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -10,12 +11,15 @@ const userSchema = new mongoose.Schema({
     email:{
         type: String,
         required: [true, "Please enter your email"],
-        validate: [validator.isEmail, 'Please enter a Valid email address']
+        unique: true,
+        validate: [validator.isEmail, 'Please enter a Valid email address'],
+
     },
     password:{
         type: String, 
         require:[true, "Please enter your password"],
-        minLength: [6, "Password must be longer than 6 charachters"]
+        minlength: [6, "Password must be longer than 6 charachters"],
+        select: false,
     },
     avatar:{
         public_id:{
@@ -39,3 +43,12 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpire: Date
 
 })
+//Encrypting password Before saving user
+userSchema.pre('save', async function(next){
+    if (!this.isModified('password')){
+        next()
+    }
+    this.password = await bcrypt.hash(this.password, 10)
+})
+
+module.exports = mongoose.model('User', userSchema )
