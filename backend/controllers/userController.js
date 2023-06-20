@@ -5,6 +5,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail')
+const crypto = require('crypto')
 //Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
@@ -67,7 +68,7 @@ exports.forgotPassword = catchAsyncErrors( async(req, res, next)=>{
             success:true,
             message: "email sent to user"
         })
-    } catch (error) {
+    } catch (error) { 
         user.getResetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
         
@@ -76,6 +77,16 @@ exports.forgotPassword = catchAsyncErrors( async(req, res, next)=>{
     }  
 
 })
+
+// Reset Password => /api/v1/password/reset/:token
+exports.resetPassword = catchAsyncErrors(async (req, res, next)=>{
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
+    const user = await User.findOne({
+        resetPasswordToken, 
+        resetPasswordExpire: {$gt:Date.now()}
+    })
+})
+
 
 //Logout user => api/v1/logout
 exports.logoutUser = catchAsyncErrors (async (req, res, next) =>{
