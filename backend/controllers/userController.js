@@ -55,7 +55,7 @@ exports.forgotPassword = catchAsyncErrors( async(req, res, next)=>{
     await user.save({validateBeforeSave: false})
 
     //Create reset password url
-    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/reset/${resetToken}`;
+    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
     const message = `Your Password Reset Token is: \n\n${resetURL}\n\n If you have not requested this email, Then ignore it`
     try {
         await sendEmail({
@@ -80,11 +80,26 @@ exports.forgotPassword = catchAsyncErrors( async(req, res, next)=>{
 
 // Reset Password => /api/v1/password/reset/:token
 exports.resetPassword = catchAsyncErrors(async (req, res, next)=>{
+    //hashing url token to check it with database, because we have stored the token as hash in DB
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
     const user = await User.findOne({
         resetPasswordToken, 
         resetPasswordExpire: {$gt:Date.now()}
     })
+    if(!user){
+        return next (new ErrorHandler('Password reset token is invalid or has been expired'))
+    }
+    if(req.body.password !== req.body.confirmPassword){
+        return next (new ErrorHandler('Password Does not Match', 400))
+    }
+    //setup new Password 
+    user.password = req.body.password;
+    user.getResetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+    sendToken(user, 200, res);       
+
+
 })
 
 
