@@ -3,6 +3,7 @@ const User = require('../models/user');
 const ErrorHandler = require('../utils/errorHandler');
 
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const sendToken = require('../utils/jwtToken');
 
 //Register a user => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -17,11 +18,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
             url: 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png'
         }
     })
-    const token = user.getJwtToken();
-    res.status(201).json({
-        success: true,
-        token
-    })
+    sendToken(user,200,res)
 
 })
 // Login User =? api/v1/login
@@ -41,12 +38,6 @@ exports.loginUser = catchAsyncErrors (async (req, res, next)=>{
     if(!isPasswordMatched){
         return next (new ErrorHandler('Invalid Email or Password'))
     }
-    const token = user.getJwtToken();
-    res.status(200).json(
-        {
-            success: true,
-            token
-        }
-    )
+    sendToken(user,200,res)
 
 })
