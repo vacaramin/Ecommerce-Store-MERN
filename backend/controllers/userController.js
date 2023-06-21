@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-const ErrorHandler = require('../utils/errorHandler').default;
+const ErrorHandler = require('../utils/errorHandler');
 
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
@@ -100,6 +100,15 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next)=>{
     sendToken(user, 200, res);       
 
 
+})
+
+//Get Currently login User => /api/v1/me
+exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+    res.status(200).json({
+        success: true,
+        user
+    })
 })
 
 
