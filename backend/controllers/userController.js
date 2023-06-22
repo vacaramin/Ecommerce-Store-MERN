@@ -190,3 +190,23 @@ exports.getUserDetails = catchAsyncErrors (async (req, res, next)=>{
     })
 
 })
+
+//Update user   = > /api/v1/admin/user/:id
+exports.updateUser= catchAsyncErrors (async (req, res, next)=> {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+    //Update Avatar
+    
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData,{
+        new: true,
+        runValidators: true,
+        userFindAndModify: false
+    })
+    res.status(200).json({
+        success:true
+    })
+
+})

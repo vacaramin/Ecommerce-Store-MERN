@@ -1,5 +1,5 @@
 const express = require('express')
-const {isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth')
+const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 const router = express.Router();
 
 const {
@@ -12,8 +12,9 @@ const {
     updatePassword,
     updateProfile,
     allUsers,
-    getUserDetails
-    } = require('../controllers/userController')
+    getUserDetails,
+    updateUser
+} = require('../controllers/userController')
 
 router.route('/register').post(registerUser);
 router.route('/login').post(loginUser);
@@ -29,6 +30,8 @@ router.route('/me/update').post(isAuthenticatedUser, updateProfile)
 //admin routes
 router.route('/admin/users').get(isAuthenticatedUser, authorizeRoles('admin'), allUsers)
 
-router.route('/admin/user/:id').get(isAuthenticatedUser, authorizeRoles('admin'), getUserDetails)
+router.route('/admin/user/:id')
+.get(isAuthenticatedUser, authorizeRoles('admin'), getUserDetails)
+.put(isAuthenticatedUser, authorizeRoles('admin'), updateUser);
 
 module.exports = router;
