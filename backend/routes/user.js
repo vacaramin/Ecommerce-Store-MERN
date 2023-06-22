@@ -11,7 +11,8 @@ const {
     getUserProfile,
     updatePassword,
     updateProfile,
-    allUsers
+    allUsers,
+    getUserDetails
     } = require('../controllers/userController')
 
 router.route('/register').post(registerUser);
@@ -24,5 +25,10 @@ router.route('/password/reset/:token').post(resetPassword)
 router.route('/me').get(isAuthenticatedUser, getUserProfile)
 router.route('/password/update').post(isAuthenticatedUser, updatePassword)
 router.route('/me/update').post(isAuthenticatedUser, updateProfile)
+
+//admin routes
 router.route('/admin/users').get(isAuthenticatedUser, authorizeRoles('admin'), allUsers)
+
+router.route('/admin/user/:id').get(isAuthenticatedUser, authorizeRoles('admin'), getUserDetails)
+
 module.exports = router;
