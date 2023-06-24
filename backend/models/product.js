@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [true, 'Please enter product name']
+        required: [true, 'Please enter product description'],
     },
     ratings: {
         type: Number,
@@ -26,7 +26,6 @@ const productSchema = new mongoose.Schema({
             public_id: {
                 type: String,
                 required: true
-
             },
             url: {
                 type: String,
@@ -41,11 +40,11 @@ const productSchema = new mongoose.Schema({
             values: [
                 'Electronics',
                 'Cameras',
-                'Laptop',
+                'Laptops',
                 'Accessories',
                 'Headphones',
                 'Food',
-                'Books',
+                "Books",
                 'Clothes/Shoes',
                 'Beauty/Health',
                 'Sports',
@@ -53,7 +52,7 @@ const productSchema = new mongoose.Schema({
                 'Home'
             ],
             message: 'Please select correct category for product'
-        },
+        }
     },
     seller: {
         type: String,
@@ -62,6 +61,7 @@ const productSchema = new mongoose.Schema({
     stock: {
         type: Number,
         required: [true, 'Please enter product stock'],
+        maxLength: [5, 'Product name cannot exceed 5 characters'],
         default: 0
     },
     numOfReviews: {
@@ -70,28 +70,34 @@ const productSchema = new mongoose.Schema({
     },
     reviews: [
         {
+            user: {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User',
+                required: true
+            },
             name: {
                 type: String,
                 required: true
-
             },
             rating: {
                 type: Number,
                 required: true
+            },
+            comment: {
+                type: String,
+                required: true
             }
         }
     ],
-    user:{
+    user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
-        required:true
+        required: true
     },
     createdAt: {
         type: Date,
         default: Date.now
     }
+})
 
-}
-)
-
-module.exports = mongoose.model('product', productSchema)
+module.exports = mongoose.model('Product', productSchema);
