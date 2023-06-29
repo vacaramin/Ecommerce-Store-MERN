@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import logo from '../../images/logo.png'
+import '../../App.css'
 function Header() {
     return (
         <Fragment>
