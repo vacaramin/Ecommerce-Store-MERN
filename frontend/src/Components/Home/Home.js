@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react'
-
+import Metadata from '../Layout/Metadata'
 const Home = () => {
     return (
         <Fragment>
+            <Metadata title = {'Buy Best Products Online'}/>
             <h1 id="products_heading">Latest Products</h1>
 
             <section id="products" className="container mt-5">
