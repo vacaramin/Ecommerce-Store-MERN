@@ -1,6 +1,15 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import Metadata from '../Layout/Metadata'
+
+import {useDispatch,useSelector} from 'react-redux'
+import { getProducts } from '../Actions/ProductActions'
 const Home = () => {
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getProducts())    
+    },[dispatch])
+
     return (
         <Fragment>
             <Metadata title = {'Buy Best Products Online'}/>
