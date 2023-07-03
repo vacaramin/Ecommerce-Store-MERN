@@ -32,7 +32,7 @@ exports.getProducts = catchAsyncErrors(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    productsCount: productlist.length,
+    count: productlist.length,
     productlist
   });
 
