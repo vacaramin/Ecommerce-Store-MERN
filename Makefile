@@ -9,5 +9,6 @@ backend-dev:
 	cd backend && npm run dev
 backend-prod:
 	cd backend && npm run prod
-
-.PHONY: start-db stop-db status-db backend-dev backend-prod
+frontend:
+	cd frontend && npm run start
+.PHONY: start-db stop-db status-db backend-dev backend-prod frontend

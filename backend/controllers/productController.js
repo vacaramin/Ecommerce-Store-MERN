@@ -29,6 +29,7 @@ exports.getProducts = catchAsyncErrors(async (req, res) => {
     .filter()
     .pagination(resperpage)
   const productlist = await apiFeatures.query;
+
   res.status(200).json({
     success: true,
     count: productlist.length,
